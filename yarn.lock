@@ -446,6 +446,11 @@ braces@^3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
+bungie-api-ts@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/bungie-api-ts/-/bungie-api-ts-5.0.0.tgz#30b02f60e2515a62c1c34bda8685724ff0b48851"
+  integrity sha512-MpEP37GmYN5klyrcpFtFezFqSK4KNmiXx7yqmCV15eJim37w7d7GpjH3jgKe3XP1uruLCmzGbf56q5pRf3ktaQ==
+
 callsites@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
