@@ -2,6 +2,7 @@ import {
   DestinyActivityHistoryResults,
   DestinyProfileResponse,
   ServerResponse,
+  DestinyProfileUserInfoCard,
 } from 'bungie-api-ts/destiny2'
 
 const fetchUrl = (url: string): Promise<unknown> => {
@@ -240,11 +241,13 @@ export const searchUser = (name: string) => {
   )
     .then((res) => {
       if (res.ok === true) {
-        return res.json()
+        return res.json() as Promise<
+          ServerResponse<DestinyProfileUserInfoCard[]>
+        >
       } else {
         console.error(res.json())
         throw new Error('Network response was not ok')
       }
     })
-    .then((data) => console.log('search', data))
+    .then((response) => response.Response)
 }
