@@ -24,3 +24,6 @@ tbody tr:hover {
   text-align: center;
 }
 
+.changeUser {
+  text-align: right;
+}

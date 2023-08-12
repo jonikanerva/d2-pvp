@@ -10,6 +10,7 @@ interface ActivitiesProps {
   membershipType: string
   membershipId: string
 }
+const clickHome = () => (window.location.pathname = '/')
 
 const Activities: React.FC<ActivitiesProps> = ({
   membershipType,
@@ -23,17 +24,29 @@ const Activities: React.FC<ActivitiesProps> = ({
     fetchCharacters(membershipType, membershipId)
       .then((characters) => fetchActivities(characters))
       .then((activities) => {
-        setError(false)
-        setActivities(activities)
+        if (activities.length === 0) {
+          setError(true)
+          console.error(activities)
+        } else {
+          setError(false)
+          setActivities(activities)
+        }
       })
       .catch((error) => {
         setError(true)
-        console.log(error)
+        console.error(error)
       })
   }, [membershipType, membershipId])
 
   if (error === true) {
-    return <h1>User Not Found! 😞</h1>
+    return (
+      <div>
+        <div className="changeUser">
+          <button onClick={clickHome}>Change user</button>
+        </div>
+        <h1>No Activities Found! 😞</h1>
+      </div>
+    )
   }
 
   if (activities === undefined) {
@@ -42,6 +55,9 @@ const Activities: React.FC<ActivitiesProps> = ({
 
   return (
     <div>
+      <div className="changeUser">
+        <button onClick={clickHome}>Change user</button>
+      </div>
       <h1>Activites</h1>
       <table>
         <thead>

@@ -42,11 +42,13 @@ export const fetchActivities = (characterIDs: string[]) =>
     ),
   )
     .then((responses) =>
-      responses.flatMap((activities) => activities?.Response?.activities),
+      responses
+        .flatMap((activities) => activities?.Response?.activities)
+        .filter((activities) => activities !== undefined),
     )
     .then((response) =>
       response.sort((a, b) =>
-        a.period > b.period ? -1 : a.period < b.period ? 1 : 0,
+        a?.period > b?.period ? -1 : a?.period < b?.period ? 1 : 0,
       ),
     )
 
