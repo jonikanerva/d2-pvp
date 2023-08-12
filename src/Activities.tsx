@@ -6,21 +6,38 @@ import { useEffect, useState } from 'react'
 import { fetchActivities, fetchCharacters, modeName } from './bungieData'
 import { dateFormat } from './dateHandling'
 
-const Activities: React.FC = () => {
+interface ActivitiesProps {
+  membershipType: string
+  membershipId: string
+}
+
+const Activities: React.FC<ActivitiesProps> = ({
+  membershipType,
+  membershipId,
+}: ActivitiesProps) => {
   const [activities, setActivities] =
     useState<DestinyHistoricalStatsPeriodGroup[]>()
+  const [error, setError] = useState<boolean>(false)
 
   useEffect(() => {
-    fetchCharacters('2', '4611686018433444841')
+    fetchCharacters(membershipType, membershipId)
       .then((characters) => fetchActivities(characters))
       .then((activities) => {
+        setError(false)
         setActivities(activities)
-        console.log(activities)
       })
-  }, [])
+      .catch((error) => {
+        setError(true)
+        console.log(error)
+      })
+  }, [membershipType, membershipId])
+
+  if (error === true) {
+    return <h1>User Not Found! 😞</h1>
+  }
 
   if (activities === undefined) {
-    return <p>loading</p>
+    return <h1>Loading... ⏳</h1>
   }
 
   return (

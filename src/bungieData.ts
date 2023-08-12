@@ -223,3 +223,28 @@ export const modeName = (mode: string) => {
       return 'Unknown'
   }
 }
+
+export const searchUser = (name: string) => {
+  const [displayName, nameCode] = name.split('#')
+
+  return fetch(
+    'https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayerByBungieName/All/',
+    {
+      method: 'post',
+      headers: { 'X-API-Key': '7a3f258f808c4e16a2d96c7339a9cea3' },
+      body: JSON.stringify({
+        displayName: displayName,
+        displayNameCode: nameCode,
+      }),
+    },
+  )
+    .then((res) => {
+      if (res.ok === true) {
+        return res.json()
+      } else {
+        console.error(res.json())
+        throw new Error('Network response was not ok')
+      }
+    })
+    .then((data) => console.log('search', data))
+}
