@@ -52,7 +52,11 @@ const Activities: React.FC<ActivitiesProps> = ({
   }
 
   if (activities === undefined) {
-    return <h1>Loading... ⏳</h1>
+    return (
+      <div className="loadingContainer">
+        <h1>Loading... ⏳</h1>
+      </div>
+    )
   }
 
   return (

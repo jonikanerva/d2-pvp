@@ -41,3 +41,11 @@ tbody tr:hover {
 .header {
   padding-right: 30px;
 }
+
+.loadingContainer {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+}
