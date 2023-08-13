@@ -45,6 +45,7 @@ const Search: React.FC = () => {
           autoCorrect="off"
           spellCheck="false"
           placeholder="donut#8611"
+          autoFocus={true}
           onChange={(event: Event) => setSearchTerm(event.target.value)}
         ></input>
 
