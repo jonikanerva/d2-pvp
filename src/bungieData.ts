@@ -5,8 +5,7 @@ import {
   DestinyProfileUserInfoCard,
 } from 'bungie-api-ts/destiny2'
 
-// const apiKey = '7a3f258f808c4e16a2d96c7339a9cea3'
-const apiKey = 'efb9f588fa0841969b73d84547277b9e'
+const apiKey = '7a3f258f808c4e16a2d96c7339a9cea3'
 
 const fetchUrl = (url: string): Promise<unknown> => {
   console.log('Downloading: ', url)
