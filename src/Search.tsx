@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { searchUser } from './bungieData'
 
 type Event = React.ChangeEvent<HTMLInputElement>
-type FormEvent = React.FormEvent<HTMLInputElement>
+type FormEvent = React.FormEvent<HTMLFormElement>
 type MouseEvent = React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
 
 const Search: React.FC = () => {
