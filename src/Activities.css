@@ -24,6 +24,20 @@ tbody tr:hover {
   text-align: center;
 }
 
-.changeUser {
-  text-align: right;
+.activitiesContainer {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+}
+
+.header {
+  padding-right: 30px;
 }

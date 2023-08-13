@@ -12,7 +12,7 @@ const Search: React.FC = () => {
     setError('')
 
     if (searchTerm.includes('#') === false) {
-      setError('Incorrect format! Enter username in format username#id')
+      setError('Incorrect format! Enter username in format name # id')
 
       return
     }
@@ -31,7 +31,7 @@ const Search: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="searchContainer">
       <h1>Enter Bungie Name</h1>
 
       <input

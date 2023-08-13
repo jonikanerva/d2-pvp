@@ -56,21 +56,21 @@ const Activities: React.FC<ActivitiesProps> = ({
   }
 
   return (
-    <div>
-      <div className="changeUser">
+    <div className="activitiesContainer">
+      <div className="headerContainer">
+        <h1 className="header">Activites</h1>
         <button onClick={clickHome}>Change user</button>
       </div>
-      <h1>Activites</h1>
       <table>
         <thead>
           <tr>
             <th>Date</th>
             <th>Mode</th>
-            <th className="alignCenter">Kills</th>
-            <th className="alignCenter">Assists</th>
-            <th className="alignCenter">Deaths</th>
-            <th className="alignCenter">Efficiency</th>
-            <th className="alignCenter">Result</th>
+            <th className="alignCenter">K</th>
+            <th className="alignCenter">A</th>
+            <th className="alignCenter">D</th>
+            <th className="alignCenter">K/D</th>
+            <th className="alignCenter">O</th>
           </tr>
         </thead>
         <tbody>
@@ -92,7 +92,9 @@ const Activities: React.FC<ActivitiesProps> = ({
                   {activity.values.efficiency.basic.displayValue}
                 </td>
                 <td className="alignCenter">
-                  {activity.values.standing.basic.displayValue}
+                  {activity.values.standing.basic.displayValue === 'Victory'
+                    ? 'W'
+                    : 'L'}
                 </td>
               </tr>
             )
