@@ -7,12 +7,13 @@ import {
 
 const apiKey = '7a3f258f808c4e16a2d96c7339a9cea3'
 
-const fetchUrl = (url: string): Promise<unknown> => {
+const fetchUrl = (url: string, init?: RequestInit): Promise<unknown> => {
   console.log('Downloading: ', url)
 
-  return fetch(url, {
-    headers: { 'X-API-Key': apiKey },
-  }).then((res) => {
+  const headers = { headers: { 'X-API-Key': apiKey } }
+  const options = { ...init, ...headers }
+
+  return fetch(url, options).then((res) => {
     if (res.ok === true) {
       return res.json()
     } else {
@@ -57,6 +58,24 @@ export const fetchActivities = (
         a?.period > b?.period ? -1 : a?.period < b?.period ? 1 : 0,
       ),
     )
+
+export const searchUser = (name: string) => {
+  const [displayName, nameCode] = name.split('#')
+
+  return (
+    fetchUrl(
+      'https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayerByBungieName/All/',
+      {
+        method: 'post',
+        headers: { 'X-API-Key': apiKey },
+        body: JSON.stringify({
+          displayName: displayName,
+          displayNameCode: nameCode,
+        }),
+      },
+    ) as Promise<ServerResponse<DestinyProfileUserInfoCard[]>>
+  ).then((response) => response.Response)
+}
 
 export const modeName = (mode: string) => {
   switch (mode) {
@@ -231,31 +250,4 @@ export const modeName = (mode: string) => {
     default:
       return 'Unknown'
   }
-}
-
-export const searchUser = (name: string) => {
-  const [displayName, nameCode] = name.split('#')
-
-  return fetch(
-    'https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayerByBungieName/All/',
-    {
-      method: 'post',
-      headers: { 'X-API-Key': apiKey },
-      body: JSON.stringify({
-        displayName: displayName,
-        displayNameCode: nameCode,
-      }),
-    },
-  )
-    .then((res) => {
-      if (res.ok === true) {
-        return res.json() as Promise<
-          ServerResponse<DestinyProfileUserInfoCard[]>
-        >
-      } else {
-        console.error(res.json())
-        throw new Error('Network response was not ok')
-      }
-    })
-    .then((response) => response.Response)
 }
