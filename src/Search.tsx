@@ -3,12 +3,15 @@ import { useState } from 'react'
 import { searchUser } from './bungieData'
 
 type Event = React.ChangeEvent<HTMLInputElement>
+type FormEvent = React.FormEvent<HTMLInputElement>
+type MouseEvent = React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
 
 const Search: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [error, setError] = useState<string>()
 
-  const clickHandler = () => {
+  const clickHandler = (event: FormEvent | MouseEvent) => {
+    event.preventDefault()
     setError('')
 
     if (searchTerm.includes('#') === false) {
@@ -33,22 +36,26 @@ const Search: React.FC = () => {
   return (
     <div className="searchContainer">
       <h1>Enter Bungie Name</h1>
+      <form onSubmit={(e) => clickHandler(e)}>
+        <input
+          id="bungieNameSearch"
+          type="text"
+          autoCapitalize="off"
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="false"
+          placeholder="donut#8611"
+          onChange={(event: Event) => setSearchTerm(event.target.value)}
+        ></input>
 
-      <input
-        id="bungieNameSearch"
-        type="text"
-        autoCapitalize="off"
-        autoComplete="off"
-        autoCorrect="off"
-        spellCheck="false"
-        placeholder="donut#8611"
-        onChange={(event: Event) => setSearchTerm(event.target.value)}
-      ></input>
-
-      <button id="searchButton" onClick={() => clickHandler()}>
-        Search
-      </button>
-
+        <button
+          id="searchButton"
+          type="button"
+          onClick={(e) => clickHandler(e)}
+        >
+          Search
+        </button>
+      </form>
       <div className="searchError">{error}&nbsp;</div>
     </div>
   )
