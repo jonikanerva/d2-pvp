@@ -24,6 +24,14 @@ tbody tr:hover {
   text-align: center;
 }
 
+.noWrap {
+  white-space: nowrap;
+}
+
+.detailInfo {
+  font-size: 12px;
+}
+
 .activitiesContainer {
   display: flex;
   flex-flow: column;
