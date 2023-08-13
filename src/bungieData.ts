@@ -5,11 +5,14 @@ import {
   DestinyProfileUserInfoCard,
 } from 'bungie-api-ts/destiny2'
 
+// const apiKey = '7a3f258f808c4e16a2d96c7339a9cea3'
+const apiKey = 'efb9f588fa0841969b73d84547277b9e'
+
 const fetchUrl = (url: string): Promise<unknown> => {
   console.log('Downloading: ', url)
 
   return fetch(url, {
-    headers: { 'X-API-Key': '7a3f258f808c4e16a2d96c7339a9cea3' },
+    headers: { 'X-API-Key': apiKey },
   }).then((res) => {
     if (res.ok === true) {
       return res.json()
@@ -32,12 +35,16 @@ export const fetchCharacters = (
     .then((response) => response?.Response?.characters?.data || {})
     .then((data) => Object.values(data).map(({ characterId }) => characterId))
 
-export const fetchActivities = (characterIDs: string[]) =>
+export const fetchActivities = (
+  membershipType: string,
+  membershipId: string,
+  characterIDs: string[],
+) =>
   Promise.all(
     characterIDs.map(
       (characterID) =>
         fetchUrl(
-          `https://www.bungie.net/Platform/Destiny2/2/Account/4611686018433444841/Character/${characterID}/Stats/Activities/?mode=5&count=50`,
+          `https://www.bungie.net/Platform/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterID}/Stats/Activities/?mode=5&count=50`,
         ) as Promise<ServerResponse<DestinyActivityHistoryResults>>,
     ),
   )
@@ -234,7 +241,7 @@ export const searchUser = (name: string) => {
     'https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayerByBungieName/All/',
     {
       method: 'post',
-      headers: { 'X-API-Key': '7a3f258f808c4e16a2d96c7339a9cea3' },
+      headers: { 'X-API-Key': apiKey },
       body: JSON.stringify({
         displayName: displayName,
         displayNameCode: nameCode,

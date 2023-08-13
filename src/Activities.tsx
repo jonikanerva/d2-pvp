@@ -22,7 +22,9 @@ const Activities: React.FC<ActivitiesProps> = ({
 
   useEffect(() => {
     fetchCharacters(membershipType, membershipId)
-      .then((characters) => fetchActivities(characters))
+      .then((characters) =>
+        fetchActivities(membershipType, membershipId, characters),
+      )
       .then((activities) => {
         if (activities.length === 0) {
           setError(true)
