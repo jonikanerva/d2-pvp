@@ -8,9 +8,11 @@ export const dateFormat = (dateString: string) => {
     day: 'numeric',
   })
 
-  const time = new Date(dateString).toLocaleTimeString('fi-fi', {
-    timeStyle: 'short',
-  })
+  const time = new Date(dateString)
+    .toLocaleTimeString('fi-fi', {
+      timeStyle: 'short',
+    })
+    .replace('.', ':')
 
   const today = new Date().toISOString().substring(0, 10)
   const activity = new Date(dateString).toISOString().substring(0, 10)

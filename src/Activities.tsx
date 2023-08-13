@@ -80,10 +80,11 @@ const Activities: React.FC<ActivitiesProps> = ({
           <tr>
             <th>Date</th>
             <th>Mode</th>
+            <th className="alignCenter">KA</th>
             <th className="alignCenter">K</th>
             <th className="alignCenter">A</th>
             <th className="alignCenter">D</th>
-            <th className="alignCenter">K/D</th>
+            <th className="alignCenter">KA/D</th>
             <th className="alignCenter">O</th>
           </tr>
         </thead>
@@ -95,6 +96,9 @@ const Activities: React.FC<ActivitiesProps> = ({
                 <td>{modeName(activity.activityDetails.mode.toString())}</td>
                 <td className="alignCenter">
                   {activity.values.opponentsDefeated.basic.displayValue}
+                </td>
+                <td className="alignCenter">
+                  {activity.values.kills.basic.displayValue}
                 </td>
                 <td className="alignCenter">
                   {activity.values.assists.basic.displayValue}
