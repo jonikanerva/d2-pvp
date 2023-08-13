@@ -11,6 +11,7 @@ interface ActivitiesProps {
   membershipId: string
 }
 const clickHome = () => (window.location.pathname = '/')
+const clickReload = () => window.location.reload()
 
 const Activities: React.FC<ActivitiesProps> = ({
   membershipType,
@@ -18,13 +19,15 @@ const Activities: React.FC<ActivitiesProps> = ({
 }: ActivitiesProps) => {
   const [activities, setActivities] =
     useState<DestinyHistoricalStatsPeriodGroup[]>()
+  const [name, setName] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
 
   useEffect(() => {
     fetchCharacters(membershipType, membershipId)
-      .then((characters) =>
-        fetchActivities(membershipType, membershipId, characters),
-      )
+      .then(({ characterIds, characterName }) => {
+        setName(characterName)
+        return fetchActivities(membershipType, membershipId, characterIds)
+      })
       .then((activities) => {
         if (activities.length === 0) {
           setError(true)
@@ -62,8 +65,15 @@ const Activities: React.FC<ActivitiesProps> = ({
   return (
     <div className="activitiesContainer">
       <div className="headerContainer">
-        <h1 className="header">Activites</h1>
-        <button onClick={clickHome}>Change user</button>
+        <button className="naviButton" onClick={clickHome}>
+          Change user
+        </button>
+        <button className="naviButton" onClick={clickReload}>
+          Reload
+        </button>
+      </div>
+      <div className="headerText">
+        <h1>{name}'s Activity</h1>
       </div>
       <table>
         <thead>

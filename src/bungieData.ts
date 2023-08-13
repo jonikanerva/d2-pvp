@@ -23,17 +23,26 @@ const fetchUrl = (url: string, init?: RequestInit): Promise<unknown> => {
   })
 }
 
+interface CharacterInfo {
+  characterIds: string[]
+  characterName: string
+}
+
 export const fetchCharacters = (
   membershipType: string,
   membershipId: string,
-): Promise<string[]> =>
+): Promise<CharacterInfo> =>
   (
     fetchUrl(
-      `https://www.bungie.net/Platform/Destiny2/${membershipType}/Profile/${membershipId}/?components=200`,
+      `https://www.bungie.net/Platform/Destiny2/${membershipType}/Profile/${membershipId}/?components=100,200`,
     ) as Promise<ServerResponse<DestinyProfileResponse>>
-  )
-    .then((response) => response?.Response?.characters?.data || {})
-    .then((data) => Object.values(data).map(({ characterId }) => characterId))
+  ).then((response) => {
+    const data = response?.Response?.profile?.data
+    return {
+      characterName: data?.userInfo?.bungieGlobalDisplayName || '',
+      characterIds: data?.characterIds || [],
+    }
+  })
 
 export const fetchActivities = (
   membershipType: string,
