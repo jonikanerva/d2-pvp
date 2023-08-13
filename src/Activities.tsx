@@ -35,6 +35,10 @@ const Activities: React.FC<ActivitiesProps> = ({
         } else {
           setError(false)
           setActivities(activities)
+
+          document
+            .getElementById('pageTop')
+            ?.scrollIntoView({ behavior: 'smooth' })
         }
       })
       .catch((error) => {
@@ -45,10 +49,8 @@ const Activities: React.FC<ActivitiesProps> = ({
 
   if (error === true) {
     return (
-      <div>
-        <div className="changeUser">
-          <button onClick={clickHome}>Change user</button>
-        </div>
+      <div className="loadingContainer">
+        <button onClick={clickHome}>Change user</button>
         <h1>No Activities Found! 😞</h1>
       </div>
     )
@@ -72,7 +74,7 @@ const Activities: React.FC<ActivitiesProps> = ({
           Reload
         </button>
       </div>
-      <div className="headerText">
+      <div className="headerText" id="pageTop">
         <h1>{name}'s Activity</h1>
       </div>
       <table>
@@ -83,7 +85,7 @@ const Activities: React.FC<ActivitiesProps> = ({
             <th className="alignCenter">K</th>
             <th className="alignCenter">D</th>
             <th className="alignCenter">K/D</th>
-            <th className="alignCenter">O</th>
+            <th className="alignCenter">R</th>
           </tr>
         </thead>
         <tbody>
