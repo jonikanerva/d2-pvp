@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { fetchActivities, fetchCharacters, modeName } from './bungieData'
 import { dateFormat } from './dateHandling'
+import Loading from './Loading'
 
 interface ActivitiesProps {
   membershipType: string
@@ -35,10 +36,6 @@ const Activities: React.FC<ActivitiesProps> = ({
         } else {
           setError(false)
           setActivities(activities)
-
-          document
-            .getElementById('pageTop')
-            ?.scrollIntoView({ behavior: 'smooth' })
         }
       })
       .catch((error) => {
@@ -49,7 +46,7 @@ const Activities: React.FC<ActivitiesProps> = ({
 
   if (error === true) {
     return (
-      <div className="loadingContainer">
+      <div>
         <button onClick={clickHome}>Change user</button>
         <h1>No Activities Found! 😞</h1>
       </div>
@@ -57,11 +54,7 @@ const Activities: React.FC<ActivitiesProps> = ({
   }
 
   if (activities === undefined) {
-    return (
-      <div className="loadingContainer">
-        <h1>Loading... ⏳</h1>
-      </div>
-    )
+    return <Loading />
   }
 
   return (
@@ -74,7 +67,7 @@ const Activities: React.FC<ActivitiesProps> = ({
           Reload
         </button>
       </div>
-      <div className="headerText" id="pageTop">
+      <div className="headerText">
         <h1>{name}'s Activity</h1>
       </div>
       <table>

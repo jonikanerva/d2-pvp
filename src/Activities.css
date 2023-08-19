@@ -45,13 +45,6 @@ tbody tr:hover {
   align-items: center;
 }
 
-.loadingContainer {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-  height: 85vh;
-}
 
 .naviButton {
   font-size: 15px;
