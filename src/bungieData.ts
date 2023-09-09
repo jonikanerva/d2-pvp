@@ -5,7 +5,7 @@ import {
   DestinyProfileUserInfoCard,
 } from 'bungie-api-ts/destiny2'
 
-const apiKey = '7a3f258f808c4e16a2d96c7339a9cea3'
+const apiKey = import.meta.env.VITE_BUNGIE_KEY
 
 const fetchUrl = (url: string, init?: RequestInit): Promise<unknown> => {
   console.log('Downloading: ', url)
@@ -255,7 +255,7 @@ export const modeName = (mode: string) => {
     case '90':
       return 'IB Rift'
     case '91':
-      return 'IB ZoneControl'
+      return 'IB Fortress'
     default:
       return 'Unknown'
   }
