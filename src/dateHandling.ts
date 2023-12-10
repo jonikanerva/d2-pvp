@@ -21,6 +21,15 @@ export const dateFormat = (dateString: string) => {
   return `${weekday}, ${month} ${daySuffix(day)}`
 }
 
+export const timeFormat = (dateString: string) => {
+  const time = new Date(dateString)
+    .toLocaleTimeString('fi-fi', {
+      timeStyle: 'short',
+    })
+    .replace('.', ':')
+
+  return time
+}
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const groupBy = <T, K extends keyof any>(
   array: T[],
