@@ -3,10 +3,12 @@ import './Activities.css'
 import { DestinyHistoricalStatsPeriodGroup } from 'bungie-api-ts/destiny2'
 import { useEffect, useState } from 'react'
 
-import { fetchActivities, fetchCharacters, modeName } from './bungieData'
-import { dateFormat } from './dateHandling'
+import ActivityList from './ActivityList'
+import { fetchActivities, fetchCharacters } from './bungieData'
+import { groupBy } from './dateHandling'
 import Loading from './Loading'
 
+type GroupedActivities = Record<string, DestinyHistoricalStatsPeriodGroup[]>
 interface ActivitiesProps {
   membershipType: string
   membershipId: string
@@ -18,8 +20,7 @@ const Activities: React.FC<ActivitiesProps> = ({
   membershipType,
   membershipId,
 }: ActivitiesProps) => {
-  const [activities, setActivities] =
-    useState<DestinyHistoricalStatsPeriodGroup[]>()
+  const [activities, setActivities] = useState<GroupedActivities>()
   const [name, setName] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
 
@@ -34,8 +35,12 @@ const Activities: React.FC<ActivitiesProps> = ({
           setError(true)
           console.error(activities)
         } else {
+          const activitiesGrouped = groupBy(activities, (activity) =>
+            activity.period.substring(0, 10),
+          )
+
           setError(false)
-          setActivities(activities)
+          setActivities(activitiesGrouped)
         }
       })
       .catch((error) => {
@@ -70,46 +75,9 @@ const Activities: React.FC<ActivitiesProps> = ({
       <div className="headerText">
         <h1>{name}'s Activity</h1>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Mode</th>
-            <th className="alignCenter">K</th>
-            <th className="alignCenter">D</th>
-            <th className="alignCenter">K/D</th>
-            <th className="alignCenter">R</th>
-          </tr>
-        </thead>
-        <tbody>
-          {activities.map((activity, key) => {
-            return (
-              <tr key={key}>
-                <td>{dateFormat(activity.period)}</td>
-                <td>{modeName(activity.activityDetails.mode.toString())}</td>
-                <td className="alignCenter noWrap">
-                  {activity.values.opponentsDefeated.basic.displayValue}{' '}
-                  <span className="detailInfo">
-                    ({activity.values.kills.basic.displayValue}+
-                    {activity.values.assists.basic.displayValue})
-                  </span>
-                </td>
-                <td className="alignCenter">
-                  {activity.values.deaths.basic.displayValue}
-                </td>
-                <td className="alignCenter">
-                  {activity.values.efficiency.basic.displayValue}
-                </td>
-                <td className="alignCenter">
-                  {activity.values.standing.basic.displayValue === 'Victory'
-                    ? 'W'
-                    : 'L'}
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+      {Object.entries(activities).map(([date, items]) => (
+        <ActivityList key={date} date={date} activities={items} />
+      ))}
     </div>
   )
 }

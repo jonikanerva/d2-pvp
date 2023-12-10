@@ -1,9 +1,11 @@
 import {
   DestinyActivityHistoryResults,
   DestinyProfileResponse,
-  ServerResponse,
   DestinyProfileUserInfoCard,
+  ServerResponse,
 } from 'bungie-api-ts/destiny2'
+
+import { isInLastMonth } from './dateHandling'
 
 const apiKey = import.meta.env.VITE_BUNGIE_KEY
 
@@ -60,7 +62,14 @@ export const fetchActivities = (
     .then((responses) =>
       responses
         .flatMap((activities) => activities?.Response?.activities)
-        .filter((activities) => activities !== undefined),
+        .filter((activities) => activities !== undefined)
+        .filter((activities) => isInLastMonth(activities?.period) === true)
+        .filter(
+          (activities) => activities?.values?.completed?.basic?.value === 1,
+        )
+        .filter(
+          (activities) => activities?.activityDetails?.isPrivate === false,
+        ),
     )
     .then((response) =>
       response.sort((a, b) =>
