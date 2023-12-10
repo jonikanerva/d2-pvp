@@ -3,6 +3,7 @@ import './ActivityList.css'
 import { DestinyHistoricalStatsPeriodGroup } from 'bungie-api-ts/destiny2'
 
 import { modeName } from './bungieData'
+import { dateFormat } from './dateHandling'
 
 interface ActivityListProps {
   date: string
@@ -14,7 +15,7 @@ const ActivityList: React.FC<ActivityListProps> = ({
   activities,
 }: ActivityListProps) => (
   <div>
-    <h2>{date}</h2>
+    <h2>{dateFormat(date)}</h2>
     <table>
       <thead>
         <tr>
