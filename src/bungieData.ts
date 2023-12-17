@@ -7,7 +7,7 @@ import {
 
 import { isInLastMonth } from './dateHandling'
 
-const apiKey = import.meta.env.VITE_BUNGIE_KEY
+const apiKey = import.meta.env.VITE_BUNGIE_KEY as string
 
 const fetchUrl = (url: string, init?: RequestInit): Promise<unknown> => {
   console.log('Downloading: ', url)

@@ -10,7 +10,7 @@ const Search: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [error, setError] = useState<string>()
 
-  const clickHandler = (event: FormEvent | MouseEvent) => {
+  const clickHandler = (event: FormEvent | MouseEvent): void => {
     event.preventDefault()
     setError('')
 
@@ -20,17 +20,19 @@ const Search: React.FC = () => {
       return
     }
 
-    return searchUser(searchTerm).then((data) => {
-      if (data.length === 0) {
-        setError(`User ${searchTerm} not found!`)
-      } else {
-        const membershipId = data[0].membershipId
-        const membershipType = data[0].membershipType
-        const pathname = `/${membershipType}/${membershipId}`
+    searchUser(searchTerm)
+      .then((data) => {
+        if (data.length === 0) {
+          setError(`User ${searchTerm} not found!`)
+        } else {
+          const membershipId = data[0].membershipId
+          const membershipType = data[0].membershipType
+          const pathname = `/${membershipType}/${membershipId}`
 
-        window.location.pathname = pathname
-      }
-    })
+          window.location.pathname = pathname
+        }
+      })
+      .catch((error) => console.log(error))
   }
 
   return (

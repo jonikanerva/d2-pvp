@@ -13,8 +13,12 @@ interface ActivitiesProps {
   membershipType: string
   membershipId: string
 }
-const clickHome = () => (window.location.pathname = '/')
-const clickReload = () => window.location.reload()
+const clickHome = () => {
+  window.location.pathname = '/'
+}
+const clickReload = () => {
+  window.location.reload()
+}
 
 const Activities: React.FC<ActivitiesProps> = ({
   membershipType,
@@ -73,7 +77,7 @@ const Activities: React.FC<ActivitiesProps> = ({
         </button>
       </div>
       <div className="headerText">
-        <h1>{name}'s Activity</h1>
+        <h1>{name}&apos;s Activity</h1>
       </div>
       {Object.entries(activities).map(([date, items]) => (
         <ActivityList key={date} date={date} activities={items} />
