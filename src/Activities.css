@@ -3,6 +3,8 @@
   flex-flow: column;
   justify-content: center;
   align-items: center;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .naviContainer {
@@ -16,8 +18,15 @@
   width: 100%;
   background-color: #242424;
   border-top: 2px solid #323232;
-  padding-top: 5px;
-  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  padding: 5px;
+  padding-bottom: calc(5px + env(safe-area-inset-bottom));
+}
+
+@media (orientation: landscape) {
+  .naviContainer {
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+  }
 }
 
 .buttonContainer {
