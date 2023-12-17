@@ -14,12 +14,11 @@ const ActivityList: React.FC<ActivityListProps> = ({
   date,
   activities,
 }: ActivityListProps) => (
-  <div>
-    <h2>{dateFormat(date)}</h2>
+  <div className="activityList">
     <table>
       <thead>
         <tr>
-          <th>Mode</th>
+          <th>{dateFormat(date)}</th>
           <th className="alignCenter">K</th>
           <th className="alignCenter">D</th>
           <th className="alignCenter">K/D</th>

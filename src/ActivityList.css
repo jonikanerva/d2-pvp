@@ -31,3 +31,7 @@ tbody tr:hover {
 .detailInfo {
   font-size: 12px;
 }
+
+.activityList {
+  padding-bottom: 30px;
+}
