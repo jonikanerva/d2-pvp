@@ -68,20 +68,22 @@ const Activities: React.FC<ActivitiesProps> = ({
 
   return (
     <div className="activitiesContainer">
-      <div className="headerContainer">
-        <button className="naviButton" onClick={clickHome}>
-          Change user
-        </button>
-        <button className="naviButton" onClick={clickReload}>
-          Reload
-        </button>
-      </div>
-      <div className="headerText">
+      <div>
         <h1>{name}&apos;s Activity</h1>
       </div>
       {Object.entries(activities).map(([date, items]) => (
         <ActivityList key={date} date={date} activities={items} />
       ))}
+      <div className="naviContainer">
+        <div className="buttonContainer">
+          <button className="naviButton" onClick={clickHome}>
+            Change user
+          </button>
+          <button className="naviButton" onClick={clickReload}>
+            Reload
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
