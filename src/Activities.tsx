@@ -74,6 +74,7 @@ const Activities: React.FC<ActivitiesProps> = ({
       {Object.entries(activities).map(([date, items]) => (
         <ActivityList key={date} date={date} activities={items} />
       ))}
+      <div className="footer">&copy;donut {new Date().getFullYear()}</div>
       <div className="naviContainer">
         <div className="buttonContainer">
           <button className="naviButton" onClick={clickHome}>

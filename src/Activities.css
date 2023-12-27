@@ -40,3 +40,10 @@
   font-size: 15px;
   /* top | right | bottom | left */
 }
+
+.footer {
+  color: #606060;
+  padding-top: 10px;
+  padding-bottom: 70px;
+  font-size: 12px;
+}
