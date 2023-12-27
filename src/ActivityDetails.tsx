@@ -30,8 +30,6 @@ const ActivityDetails: React.FC<ActivityDetailsProps> = ({
     return null
   }
 
-  console.log('Activity', activityId, activity)
-
   return null
 }
 
