@@ -56,7 +56,7 @@ export const fetchActivities = (
     characterIDs.map(
       (characterID) =>
         fetchUrl(
-          `https://www.bungie.net/Platform/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterID}/Stats/Activities/?mode=5&count=50`,
+          `https://www.bungie.net/Platform/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterID}/Stats/Activities/?mode=5&page=0&count=250`,
         ) as Promise<ServerResponse<DestinyActivityHistoryResults>>,
     ),
   )
