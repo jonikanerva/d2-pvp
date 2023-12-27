@@ -16,53 +16,45 @@ const ActivityList: React.FC<ActivityListProps> = ({
   activities,
 }: ActivityListProps) => (
   <div className="activityList">
-    <table>
-      <thead>
-        <tr>
-          <th>{dateFormat(date)}</th>
-          <th className="alignCenter">K</th>
-          <th className="alignCenter">D</th>
-          <th className="alignCenter">K/D</th>
-          <th className="alignCenter">R</th>
-        </tr>
-      </thead>
-      <tbody>
-        {activities.map((activity, key) => {
-          return (
-            <tr key={key}>
-              <td>
-                <ActivityDetails
-                  activityDate={date}
-                  activityId={activity.activityDetails.instanceId}
-                />
-                {modeName(activity.activityDetails.mode.toString())}{' '}
-                <span className="detailInfo">
-                  ({timeFormat(activity.period)})
-                </span>
-              </td>
-              <td className="alignCenter noWrap">
-                {activity.values.opponentsDefeated.basic.displayValue}{' '}
-                <span className="detailInfo">
-                  ({activity.values.kills.basic.displayValue}+
-                  {activity.values.assists.basic.displayValue})
-                </span>
-              </td>
-              <td className="alignCenter">
-                {activity.values.deaths.basic.displayValue}
-              </td>
-              <td className="alignCenter">
-                {activity.values.efficiency.basic.displayValue}
-              </td>
-              <td className="alignCenter">
-                {activity.values.standing.basic.displayValue === 'Victory'
-                  ? 'W'
-                  : 'L'}
-              </td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
+    <div className="row underline">
+      <div className="cell matchType">{dateFormat(date)}</div>
+      <div className="cell kills">K</div>
+      <div className="cell deaths">D</div>
+      <div className="cell kd ">K/D</div>
+      <div className="cell result">R</div>
+    </div>
+    {activities.map((activity, key) => {
+      return (
+        <div className="row" key={key}>
+          <div className="cell matchType">
+            <ActivityDetails
+              activityDate={date}
+              activityId={activity.activityDetails.instanceId}
+            />
+            {modeName(activity.activityDetails.mode.toString())}{' '}
+            <span className="detailInfo">({timeFormat(activity.period)})</span>
+          </div>
+          <div className="cell kills">
+            {activity.values.opponentsDefeated.basic.displayValue}{' '}
+            <span className="detailInfo">
+              ({activity.values.kills.basic.displayValue}+
+              {activity.values.assists.basic.displayValue})
+            </span>
+          </div>
+          <div className="cell deaths">
+            {activity.values.deaths.basic.displayValue}
+          </div>
+          <div className="cell kd">
+            {activity.values.efficiency.basic.displayValue}
+          </div>
+          <div className="cell result">
+            {activity.values.standing.basic.displayValue === 'Victory'
+              ? 'W'
+              : 'L'}
+          </div>
+        </div>
+      )
+    })}
   </div>
 )
 

@@ -1,43 +1,52 @@
-table {
-  border-collapse: collapse;
-  min-width: 350px;
+.activityList {
+  padding-bottom: 30px;
 }
 
-td, th {
-  padding: 0.5rem;
-  padding-left: 0rem;
-  text-align: left;
+.row {
+  display: flex;
 }
 
-tbody tr:nth-child(odd) {
+.row.underline {
+  border-bottom: 5px solid #13d3e4;
+  font-weight: bold;
+}
+
+.row:nth-child(even) {
   background-color: #2a2a2a;
 }
 
-thead tr {
-  background-color: transparent;
-  border-bottom: 5px solid #13d3e4;
-}
-
-tbody tr:hover {
+.row:hover {
   background-color: #3b3333;
 }
 
-thead tr:hover {
-  background-color: #3b3333;
+.cell {
+  padding: 8px 8px 8px 0px;
+  /* top | right | bottom | left */
 }
 
-.alignCenter {
-  text-align: center;
+.cell.matchType {
+  width: 168px;
+  text-align: left;
 }
 
-.noWrap {
-  white-space: nowrap;
+.cell.kills {
+  width: 70px;
+}
+
+.cell.deaths {
+  width: 18px;
+}
+
+.cell.kd {
+  width: 40px;
+}
+
+.cell.result {
+  width: 18px;
 }
 
 .detailInfo {
   font-size: 12px;
 }
 
-.activityList {
-  padding-bottom: 30px;
-}
+
