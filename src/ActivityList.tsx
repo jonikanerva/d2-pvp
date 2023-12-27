@@ -31,6 +31,10 @@ const ActivityList: React.FC<ActivityListProps> = ({
           return (
             <tr key={key}>
               <td>
+                <ActivityDetails
+                  activityDate={date}
+                  activityId={activity.activityDetails.instanceId}
+                />
                 {modeName(activity.activityDetails.mode.toString())}{' '}
                 <span className="detailInfo">
                   ({timeFormat(activity.period)})
@@ -53,12 +57,6 @@ const ActivityList: React.FC<ActivityListProps> = ({
                 {activity.values.standing.basic.displayValue === 'Victory'
                   ? 'W'
                   : 'L'}
-              </td>
-              <td>
-                <ActivityDetails
-                  activityDate={date}
-                  activityId={activity.activityDetails.instanceId}
-                ></ActivityDetails>
               </td>
             </tr>
           )

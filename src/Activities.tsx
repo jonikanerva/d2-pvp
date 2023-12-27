@@ -70,9 +70,7 @@ const Activities: React.FC<ActivitiesProps> = ({
 
   return (
     <div className="activitiesContainer">
-      <div>
-        <h1>{name}&apos;s Activity</h1>
-      </div>
+      <div className="header">{name}&apos;s Activity</div>
       {Object.entries(activities).map(([date, items]) => (
         <ActivityList key={date} date={date} activities={items} />
       ))}
