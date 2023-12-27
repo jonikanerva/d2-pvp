@@ -7,6 +7,7 @@ import ActivityList from './ActivityList'
 import { fetchActivities, fetchCharacters } from './bungieData'
 import { groupBy } from './dateHandling'
 import Loading from './Loading'
+import { cleanStorage } from './localStorage'
 
 type GroupedActivities = Record<string, DestinyHistoricalStatsPeriodGroup[]>
 interface ActivitiesProps {
@@ -29,6 +30,7 @@ const Activities: React.FC<ActivitiesProps> = ({
   const [error, setError] = useState<boolean>(false)
 
   useEffect(() => {
+    cleanStorage()
     fetchCharacters(membershipType, membershipId)
       .then(({ characterIds, characterName }) => {
         setName(characterName)

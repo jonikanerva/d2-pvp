@@ -2,6 +2,7 @@ import './ActivityList.css'
 
 import { DestinyHistoricalStatsPeriodGroup } from 'bungie-api-ts/destiny2'
 
+import ActivityDetails from './ActivityDetails'
 import { modeName } from './bungieData'
 import { dateFormat, timeFormat } from './dateHandling'
 
@@ -52,6 +53,12 @@ const ActivityList: React.FC<ActivityListProps> = ({
                 {activity.values.standing.basic.displayValue === 'Victory'
                   ? 'W'
                   : 'L'}
+              </td>
+              <td>
+                <ActivityDetails
+                  activityDate={date}
+                  activityId={activity.activityDetails.instanceId}
+                ></ActivityDetails>
               </td>
             </tr>
           )

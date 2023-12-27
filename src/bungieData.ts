@@ -1,5 +1,6 @@
 import {
   DestinyActivityHistoryResults,
+  DestinyPostGameCarnageReportData,
   DestinyProfileResponse,
   DestinyProfileUserInfoCard,
   ServerResponse,
@@ -10,7 +11,7 @@ import { isInLastMonth } from './dateHandling'
 const apiKey = import.meta.env.VITE_BUNGIE_KEY as string
 
 const fetchUrl = (url: string, init?: RequestInit): Promise<unknown> => {
-  console.log('Downloading: ', url)
+  console.log('Downloading:', url)
 
   const headers = { headers: { 'X-API-Key': apiKey } }
   const options = { ...init, ...headers }
@@ -269,3 +270,18 @@ export const modeName = (mode: string) => {
       return 'Unknown'
   }
 }
+
+export const getGameStats = (activityID: string) =>
+  (
+    fetchUrl(
+      `https://stats.bungie.net/Platform/Destiny2/Stats/PostGameCarnageReport/${activityID}/`,
+    ) as Promise<ServerResponse<DestinyPostGameCarnageReportData>>
+  )
+    .then((response) => {
+      return response.Response
+    })
+    .catch((error) => {
+      console.error('Carnage report failed to load', error)
+
+      return null
+    })
