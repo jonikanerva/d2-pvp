@@ -7,11 +7,32 @@ import { getGameStats } from './bungieData'
 import { groupBy } from './dateHandling'
 import { getOrSet } from './localStorage'
 import TeamDetails from './TeamDetails'
+import { useAppContext } from './useAppContext'
 
 interface ActivityDetailsProps {
   activityId: string
   activityDate: string
   detailsVisible: boolean
+}
+
+const validCompGame = (activity: DestinyPostGameCarnageReportData): boolean => {
+  // not comp match
+  if (activity.activityDetails.modes.includes(69) === false) {
+    return false
+  }
+
+  // somebody joined late or quit early
+  if (
+    activity.entries.filter(
+      (entry) =>
+        entry.values.completed.basic.value === 0 ||
+        entry.values.startSeconds.basic.value > 10,
+    ).length > 0
+  ) {
+    return false
+  }
+
+  return true
 }
 
 const ActivityDetails: React.FC<ActivityDetailsProps> = ({
@@ -21,6 +42,7 @@ const ActivityDetails: React.FC<ActivityDetailsProps> = ({
 }: ActivityDetailsProps) => {
   const storageId = `${activityDate}-${activityId}`
   const [activity, setActivity] = useState<DestinyPostGameCarnageReportData>()
+  const { compActivities, setCompActivities } = useAppContext()
 
   useEffect(() => {
     getOrSet(storageId, () => getGameStats(activityId))
@@ -31,6 +53,20 @@ const ActivityDetails: React.FC<ActivityDetailsProps> = ({
       })
       .catch((error) => console.error('Activity details failed to load', error))
   }, [activityId, storageId])
+
+  useEffect(() => {
+    if (activity !== undefined && validCompGame(activity)) {
+      const id = activity.activityDetails.instanceId
+      const ids = compActivities === undefined ? [id] : [...compActivities, id]
+
+      if (
+        compActivities === undefined ||
+        compActivities?.includes(id) === false
+      ) {
+        setCompActivities(ids)
+      }
+    }
+  }, [activity, compActivities, setCompActivities])
 
   if (activity === undefined) {
     return null

@@ -8,6 +8,7 @@ import { fetchActivities, fetchCharacters } from './bungieData'
 import { groupBy } from './dateHandling'
 import Loading from './Loading'
 import { cleanStorage } from './localStorage'
+import { useAppContext } from './useAppContext'
 
 type GroupedActivities = Record<string, DestinyHistoricalStatsPeriodGroup[]>
 interface ActivitiesProps {
@@ -35,14 +36,18 @@ const calculateAverage = (arr: number[]): number => {
   return parseFloat(average.toFixed(2))
 }
 
-const calculateCompKD = (activities: GroupedActivities): number => {
+const calculateCompKD = (
+  activities: GroupedActivities,
+  compActivities: string[] | undefined,
+): number => {
+  if (compActivities === undefined || compActivities.length === 0) {
+    return 0
+  }
+
   const kds = Object.values(activities)
     .flatMap((items) => items.map((item) => item))
-    .filter(
-      (entry) =>
-        entry.values.completed.basic.value === 1 &&
-        entry.values.startSeconds.basic.value < 11 &&
-        entry.activityDetails.modes.includes(69),
+    .filter((entry) =>
+      compActivities.includes(entry.activityDetails.instanceId),
     )
     .map((entry) => entry.values.efficiency.basic.value)
 
@@ -56,6 +61,7 @@ const Activities: React.FC<ActivitiesProps> = ({
   const [activities, setActivities] = useState<GroupedActivities>()
   const [name, setName] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
+  const { compActivities } = useAppContext()
 
   useEffect(() => {
     cleanStorage()
@@ -100,7 +106,8 @@ const Activities: React.FC<ActivitiesProps> = ({
     <div className="activitiesContainer">
       <div className="header">{name}&apos;s activity</div>
       <div className="compKD">
-        avg comp k/d: <b>{calculateCompKD(activities)}</b>
+        comp k/d is <b>{calculateCompKD(activities, compActivities)}</b> from
+        the last <b>{compActivities?.length || 0}</b> matches
       </div>
       {Object.entries(activities).map(([date, items]) => (
         <ActivityList key={date} date={date} activities={items} />
