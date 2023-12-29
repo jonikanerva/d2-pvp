@@ -1,5 +1,6 @@
 import Activities from './Activities'
 import Search from './Search'
+import { AppProvider } from './AppContext'
 
 const App: React.FC = () => {
   const [, membershipType, membershipId] = window.location.pathname.split(
@@ -12,7 +13,9 @@ const App: React.FC = () => {
   }
 
   return (
-    <Activities membershipType={membershipType} membershipId={membershipId} />
+    <AppProvider>
+      <Activities membershipType={membershipType} membershipId={membershipId} />
+    </AppProvider>
   )
 }
 
