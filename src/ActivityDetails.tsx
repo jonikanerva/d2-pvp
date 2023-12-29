@@ -60,7 +60,14 @@ const ActivityDetails: React.FC<ActivityDetailsProps> = ({
     return null
   }
 
-  const teams = groupBy(activity.entries, (entry) => entry.standing)
+  const entries = activity.entries.sort((a, b) => {
+    const one = a.values.efficiency.basic.value
+    const two = b.values.efficiency.basic.value
+
+    return one > two ? -1 : one < two ? 1 : 0
+  })
+
+  const teams = groupBy(entries, (entry) => entry.standing)
   const winners = teams[0]
   const losers = teams[1]
 
