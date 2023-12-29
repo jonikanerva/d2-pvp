@@ -69,9 +69,6 @@ export const fetchActivities = (
         .filter((activities) => activities !== undefined)
         .filter((activities) => isInLastMonth(activities?.period) === true)
         .filter(
-          (activities) => activities?.values?.completed?.basic?.value === 1,
-        )
-        .filter(
           (activities) => activities?.activityDetails?.isPrivate === false,
         ),
     )
@@ -277,6 +274,10 @@ export const modeName = (mode: string) => {
 export const playerDNF = (
   userInfo: DestinyPostGameCarnageReportEntry,
 ): boolean => (userInfo.values.completed.basic.value === 0 ? true : false)
+
+export const playerStartedLate = (
+  userInfo: DestinyPostGameCarnageReportEntry,
+): boolean => (userInfo.values.startSeconds.basic.value > 10 ? true : false)
 
 export const playerPlatform = (userInfo: DestinyPlayer): string => {
   const user = userInfo.destinyUserInfo

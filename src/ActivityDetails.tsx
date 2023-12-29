@@ -1,41 +1,17 @@
 import './ActivityDetails.css'
 
-import {
-  DestinyPlayer,
-  DestinyPostGameCarnageReportData,
-} from 'bungie-api-ts/destiny2'
+import { DestinyPostGameCarnageReportData } from 'bungie-api-ts/destiny2'
 import { useEffect, useState } from 'react'
 
-import { getGameStats, playerDNF, playerPlatform } from './bungieData'
+import { getGameStats } from './bungieData'
 import { groupBy } from './dateHandling'
 import { getOrSet } from './localStorage'
+import TeamDetails from './TeamDetails'
 
 interface ActivityDetailsProps {
   activityId: string
   activityDate: string
   detailsVisible: boolean
-}
-
-interface PlatformImageProps {
-  userInfo: DestinyPlayer
-}
-
-const PlatformImage: React.FC<PlatformImageProps> = ({
-  userInfo,
-}: PlatformImageProps) => {
-  const platform = playerPlatform(userInfo)
-
-  if (platform == 'xb') {
-    return <img src="/xb.png" width="20px" height="20px" alt="Xbox logo" />
-  } else if (platform == 'ps') {
-    return (
-      <img src="/ps.png" width="20px" height="20px" alt="Playstation logo" />
-    )
-  } else if (platform == 'pc') {
-    return <img src="/pc.png" width="20px" height="20px" alt="PC logo" />
-  } else {
-    return '?'
-  }
 }
 
 const ActivityDetails: React.FC<ActivityDetailsProps> = ({
@@ -73,58 +49,12 @@ const ActivityDetails: React.FC<ActivityDetailsProps> = ({
 
   return (
     <div className={detailsVisible ? 'team visible' : 'team hidden'}>
-      {winners.map((activity, key) => {
-        return (
-          <div className="row winners" key={key}>
-            <div className="cell matchType">
-              {activity.player.destinyUserInfo.bungieGlobalDisplayName}
-              {playerDNF(activity) && ' (DNF)'}
-            </div>
-            <div className="cell kills">
-              {activity.values.opponentsDefeated.basic.displayValue}{' '}
-              <span className="detailInfo">
-                ({activity.values.kills.basic.displayValue}+
-                {activity.values.assists.basic.displayValue})
-              </span>
-            </div>
-            <div className="cell deaths">
-              {activity.values.deaths.basic.displayValue}
-            </div>
-            <div className="cell kd">
-              {activity.values.efficiency.basic.displayValue}
-            </div>
-            <div className="cell">
-              <PlatformImage userInfo={activity.player} />
-            </div>
-          </div>
-        )
-      })}
-      {losers.map((activity, key) => {
-        return (
-          <div className="row losers" key={key}>
-            <div className="cell matchType">
-              {activity.player.destinyUserInfo.bungieGlobalDisplayName}
-              {playerDNF(activity) && <span className="dnf">dnf</span>}
-            </div>
-            <div className="cell kills">
-              {activity.values.opponentsDefeated.basic.displayValue}{' '}
-              <span className="detailInfo">
-                ({activity.values.kills.basic.displayValue}+
-                {activity.values.assists.basic.displayValue})
-              </span>
-            </div>
-            <div className="cell deaths">
-              {activity.values.deaths.basic.displayValue}
-            </div>
-            <div className="cell kd">
-              {activity.values.efficiency.basic.displayValue}
-            </div>
-            <div className="cell">
-              <PlatformImage userInfo={activity.player} />
-            </div>
-          </div>
-        )
-      })}
+      {winners.map((activity, key) => (
+        <TeamDetails activity={activity} key={key} />
+      ))}
+      {losers.map((activity, key) => (
+        <TeamDetails activity={activity} key={key} />
+      ))}
     </div>
   )
 }
