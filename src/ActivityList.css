@@ -4,6 +4,7 @@
 
 .row {
   display: flex;
+  font-weight:600;
 }
 
 .row.underline {
@@ -11,12 +12,8 @@
   font-weight: bold;
 }
 
-.row:nth-child(even) {
-  background-color: #2a2a2a;
-}
-
-.row:hover {
-  background-color: #3b3333;
+.team .row {
+  background-color: transparent;
 }
 
 .cell {
@@ -27,6 +24,10 @@
 .cell.matchType {
   width: 168px;
   text-align: left;
+}
+
+.team .cell.matchType {
+  width: 155px;
 }
 
 .cell.kills {
@@ -49,4 +50,8 @@
   font-size: 12px;
 }
 
-
+.dnf {
+  font-size: 12px;
+  color: red;
+  padding-left: 5px;
+}

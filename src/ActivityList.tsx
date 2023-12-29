@@ -2,9 +2,8 @@ import './ActivityList.css'
 
 import { DestinyHistoricalStatsPeriodGroup } from 'bungie-api-ts/destiny2'
 
-import ActivityDetails from './ActivityDetails'
-import { modeName } from './bungieData'
-import { dateFormat, timeFormat } from './dateHandling'
+import Activity from './Activity'
+import { dateFormat } from './dateHandling'
 
 interface ActivityListProps {
   date: string
@@ -23,38 +22,9 @@ const ActivityList: React.FC<ActivityListProps> = ({
       <div className="cell kd ">K/D</div>
       <div className="cell result">R</div>
     </div>
-    {activities.map((activity, key) => {
-      return (
-        <div className="row" key={key}>
-          <div className="cell matchType">
-            <ActivityDetails
-              activityDate={date}
-              activityId={activity.activityDetails.instanceId}
-            />
-            {modeName(activity.activityDetails.mode.toString())}{' '}
-            <span className="detailInfo">({timeFormat(activity.period)})</span>
-          </div>
-          <div className="cell kills">
-            {activity.values.opponentsDefeated.basic.displayValue}{' '}
-            <span className="detailInfo">
-              ({activity.values.kills.basic.displayValue}+
-              {activity.values.assists.basic.displayValue})
-            </span>
-          </div>
-          <div className="cell deaths">
-            {activity.values.deaths.basic.displayValue}
-          </div>
-          <div className="cell kd">
-            {activity.values.efficiency.basic.displayValue}
-          </div>
-          <div className="cell result">
-            {activity.values.standing.basic.displayValue === 'Victory'
-              ? 'W'
-              : 'L'}
-          </div>
-        </div>
-      )
-    })}
+    {activities.map((activity, key) => (
+      <Activity activity={activity} date={date} key={key} />
+    ))}
   </div>
 )
 

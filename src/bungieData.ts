@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import {
   DestinyActivityHistoryResults,
+  DestinyPlayer,
   DestinyPostGameCarnageReportData,
+  DestinyPostGameCarnageReportEntry,
   DestinyProfileResponse,
   DestinyProfileUserInfoCard,
   ServerResponse,
@@ -268,6 +271,41 @@ export const modeName = (mode: string) => {
       return 'IB Fortress'
     default:
       return 'Unknown'
+  }
+}
+
+export const playerDNF = (
+  userInfo: DestinyPostGameCarnageReportEntry,
+): boolean => (userInfo.values.completed.basic.value === 0 ? true : false)
+
+export const playerPlatform = (userInfo: DestinyPlayer): string => {
+  const user = userInfo.destinyUserInfo
+  const platform =
+    user.crossSaveOverride !== 0 ? user.crossSaveOverride : user.membershipType
+
+  /*
+  None = 0,
+  TigerXbox = 1,
+  TigerPsn = 2,
+  TigerSteam = 3,
+  TigerBlizzard = 4,
+  TigerStadia = 5,
+  TigerEgs = 6,
+  TigerDemon = 10,
+  BungieNext = 254,
+*/
+
+  switch (platform) {
+    case 1:
+      return 'xb'
+    case 2:
+      return 'ps'
+    case 3:
+    case 4:
+    case 6:
+      return 'pc'
+    default:
+      return 'n/a'
   }
 }
 
