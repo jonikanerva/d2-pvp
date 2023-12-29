@@ -42,9 +42,16 @@
 }
 
 .header {
-  padding: 25px;
+  padding: 25px 25px 0px 25px;
   font-size: 24px;
   font-weight: 500;
+}
+
+.compKD {
+  color: #a3a3a3;
+  font-size: 12px;
+  padding-top: 5px;
+  padding-bottom: 35px;
 }
 
 .footer {

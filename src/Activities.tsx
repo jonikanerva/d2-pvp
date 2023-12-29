@@ -21,6 +21,34 @@ const clickReload = () => {
   window.location.reload()
 }
 
+const calculateAverage = (arr: number[]): number => {
+  if (arr.length === 0) {
+    return 0
+  }
+
+  const sum = arr.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0,
+  )
+  const average = sum / arr.length
+
+  return parseFloat(average.toFixed(2))
+}
+
+const calculateCompKD = (activities: GroupedActivities): number => {
+  const kds = Object.values(activities)
+    .flatMap((items) => items.map((item) => item))
+    .filter(
+      (entry) =>
+        entry.values.completed.basic.value === 1 &&
+        entry.values.startSeconds.basic.value < 11 &&
+        entry.activityDetails.modes.includes(69),
+    )
+    .map((entry) => entry.values.efficiency.basic.value)
+
+  return calculateAverage(kds)
+}
+
 const Activities: React.FC<ActivitiesProps> = ({
   membershipType,
   membershipId,
@@ -70,7 +98,10 @@ const Activities: React.FC<ActivitiesProps> = ({
 
   return (
     <div className="activitiesContainer">
-      <div className="header">{name}&apos;s Activity</div>
+      <div className="header">{name}&apos;s activity</div>
+      <div className="compKD">
+        avg comp k/d: <b>{calculateCompKD(activities)}</b>
+      </div>
       {Object.entries(activities).map(([date, items]) => (
         <ActivityList key={date} date={date} activities={items} />
       ))}
