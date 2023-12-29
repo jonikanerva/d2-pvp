@@ -4,7 +4,6 @@
 
 .row {
   display: flex;
-  font-weight:600;
 }
 
 .row.underline {
