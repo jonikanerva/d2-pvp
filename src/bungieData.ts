@@ -271,6 +271,28 @@ export const modeName = (mode: string) => {
   }
 }
 
+export const validCompGame = (
+  activity: DestinyPostGameCarnageReportData,
+): boolean => {
+  // not comp match
+  if (activity.activityDetails.modes.includes(69) === false) {
+    return false
+  }
+
+  // somebody joined late or quit early
+  if (
+    activity.entries.filter(
+      (entry) =>
+        entry.values.completed.basic.value === 0 ||
+        entry.values.startSeconds.basic.value > 10,
+    ).length > 0
+  ) {
+    return false
+  }
+
+  return true
+}
+
 export const playerDNF = (
   userInfo: DestinyPostGameCarnageReportEntry,
 ): boolean => (userInfo.values.completed.basic.value === 0 ? true : false)

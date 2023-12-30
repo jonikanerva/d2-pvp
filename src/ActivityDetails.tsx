@@ -3,7 +3,7 @@ import './ActivityDetails.css'
 import { DestinyPostGameCarnageReportData } from 'bungie-api-ts/destiny2'
 import { useEffect, useState } from 'react'
 
-import { getGameStats } from './bungieData'
+import { getGameStats, validCompGame } from './bungieData'
 import { groupBy } from './dateHandling'
 import { getOrSet } from './localStorage'
 import TeamDetails from './TeamDetails'
@@ -13,26 +13,6 @@ interface ActivityDetailsProps {
   activityId: string
   activityDate: string
   detailsVisible: boolean
-}
-
-const validCompGame = (activity: DestinyPostGameCarnageReportData): boolean => {
-  // not comp match
-  if (activity.activityDetails.modes.includes(69) === false) {
-    return false
-  }
-
-  // somebody joined late or quit early
-  if (
-    activity.entries.filter(
-      (entry) =>
-        entry.values.completed.basic.value === 0 ||
-        entry.values.startSeconds.basic.value > 10,
-    ).length > 0
-  ) {
-    return false
-  }
-
-  return true
 }
 
 const ActivityDetails: React.FC<ActivityDetailsProps> = ({
