@@ -80,8 +80,8 @@ const ActivityDetails: React.FC<ActivityDetailsProps> = ({
   })
 
   const teams = groupBy(entries, (entry) => entry.standing)
-  const winners = teams[0]
-  const losers = teams[1]
+  const winners = teams[0] ?? []
+  const losers = teams[1] ?? []
 
   return (
     <div className={detailsVisible ? 'team visible' : 'team hidden'}>
