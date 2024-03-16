@@ -16,36 +16,35 @@ const Activity: React.FC<ActivityProps> = ({
 }: ActivityProps) => {
   const [detailsVisible, setDetailsVisible] = useState<boolean>(false)
 
+  const matchType = modeName(activity.activityDetails.mode.toString())
+  const matchTime = timeFormat(activity.period)
+  const ka = activity?.values?.opponentsDefeated?.basic?.displayValue
+  const kills = activity?.values?.kills?.basic?.displayValue
+  const assists = activity?.values?.assists?.basic?.displayValue
+  const deaths = activity?.values?.deaths?.basic?.displayValue
+  const kd = activity?.values?.efficiency?.basic?.displayValue
+  const kda = `${kills}+${assists}`
+  const result =
+    activity?.values?.standing?.basic?.displayValue === 'Victory' ? 'W' : 'L'
+  const instanseId = activity?.activityDetails?.instanceId
+
   return (
     <Fragment>
       <div className="row" onClick={() => setDetailsVisible(!detailsVisible)}>
         <div className="cell matchType">
-          {modeName(activity.activityDetails.mode.toString())}{' '}
-          <span className="detailInfo">({timeFormat(activity.period)})</span>
+          {matchType} <span className="detailInfo">({matchTime})</span>
         </div>
         <div className="cell kills">
-          {activity.values.opponentsDefeated.basic.displayValue}{' '}
-          <span className="detailInfo">
-            ({activity.values.kills.basic.displayValue}+
-            {activity.values.assists.basic.displayValue})
-          </span>
+          {ka} <span className="detailInfo">({kda})</span>
         </div>
-        <div className="cell deaths">
-          {activity.values.deaths.basic.displayValue}
-        </div>
-        <div className="cell kd">
-          {activity.values.efficiency.basic.displayValue}
-        </div>
-        <div className="cell result">
-          {activity.values.standing.basic.displayValue === 'Victory'
-            ? 'W'
-            : 'L'}
-        </div>
+        <div className="cell deaths">{deaths}</div>
+        <div className="cell kd">{kd}</div>
+        <div className="cell result">{result}</div>
       </div>
       <div className="row">
         <ActivityDetails
           activityDate={date}
-          activityId={activity.activityDetails.instanceId}
+          activityId={instanseId}
           detailsVisible={detailsVisible}
         />
       </div>
